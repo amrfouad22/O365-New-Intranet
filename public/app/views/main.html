@@ -1,0 +1,35 @@
+<div class="col-md-12">
+  <div class="ms-Grid-row">
+    <!-- App navigation bar markup. -->
+    <div class="ms-NavBar">
+      <ul class="ms-NavBar-items">
+        <li class="navbar-header">You are now Connected</li>
+        <li class="ms-NavBar-item ms-NavBar-item--right" ng-show="main.isConnected" ng-click="main.disconnect()"><i class="ms-Icon ms-Icon--x"></i> Disconnect</li>
+      </ul>
+    </div>
+    <!-- App main content markup. -->
+    <div >
+      <div ng-hide="main.isConnected">
+        <p class="ms-font-xl">Use the button below to connect to Office 365.</p>
+        <p class="ms-font-l">We are using Our Azure AD App ,Which have full access to Graph APIs if you want to use yours add your app client Id below</p>
+        <label class="col-md-3 control-label">Client ID</label>
+        <div class="col-md-9">
+          <input class="form-control col-md-12" ng-model="main.clientId" ng-init="main.clientId='b65937cd-73fc-41af-8ba2-7f9415b5ad57'"/>
+        </div>
+        <button class="ms-Button" ng-click="main.connect()">
+          <span class="ms-Button-label">Login to O365 StandAlone intranet</span>
+        </button>
+      </div>
+      <!--Only if connected-->
+        <!-- start the console here-->
+        <div ng-show="main.isConnected"> 
+          <div>
+            <h2 class="ms-font-xxl ms-fontWeight-semibold">Hi , {{ main.userAlias }}!</h2>
+            <!--Search results directive-->
+            
+            <!--end of Search result directive-->
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

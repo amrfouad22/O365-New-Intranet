@@ -1,0 +1,6 @@
+<li>
+	<a ng-click="nodeClick();">{{node.name}}</a>
+	<ul ng-if="node.childNodes&&show" ng-repeat="child in node.childNodes">
+		<nav-item node="child"></nav-item>
+	</ul>
+</li>
