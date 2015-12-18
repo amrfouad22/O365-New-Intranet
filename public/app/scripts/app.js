@@ -30,8 +30,7 @@
 				clientId: clientId,
 				// The endpoints here are resources for cross origin requests.
 				endpoints: {
-					'https://graph.microsoft.com': 'https://graph.microsoft.com',
-					'https://insightme.sharepoint.com':'https://insightme.sharepoint.com'
+					'https://insightme.sharepoint.com/_api/':'https://insightme.sharepoint.com'
 				}
 			},
 			$httpProvider

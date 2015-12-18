@@ -10,7 +10,7 @@
   /**
    * The MainController code.
    */
-  function MainController($http, $log, adalAuthenticationService,$rootScope) {
+  function MainController($http, $log, adalAuthenticationService) {
     var vm = this;
     
     // Properties
@@ -25,7 +25,7 @@
     // Methods
     vm.connect = connect;
     vm.disconnect = disconnect;
-    vm.execute = execute;
+
     /////////////////////////////////////////
     // End of exposed properties and methods.
     
@@ -49,21 +49,6 @@
       }
     })();
     /**
-     * initalise function get helper operations data
-     */
-     (function init() {
-       var request={method:'GET',url:baseUrl+'/data/operations.json'};
-       $http(request).then(
-         function(response){
-         vm.rootNode=response.data.root;
-       },function(error){
-         vm.operations={};
-         $log.debug('Error loading operations..')
-         
-       });
-    })();
-    
-    /**
 		 * Expose the login method from ADAL to the view.
 		 */
     function connect() {
@@ -71,7 +56,7 @@
       adalAuthenticationService.config.clientId=vm.clientId;
       adalAuthenticationService.login();
     };
-		
+    
 		/**
 		 * Expose the logOut method from ADAL to the view.
 		 */
@@ -79,41 +64,7 @@
       $log.debug('Disconnecting from Office 365...');
       adalAuthenticationService.logOut();
     };
-    /**Try Out End Microsoft Graph API endpoints*/
-    function execute(){
-      var request = {
-        method: vm.method,
-        url: graphUrl+vm.version+vm.url
-      };
-      if(vm.payload!=undefined &&vm.payload!=''){
-        request.data=vm.payload;
-      }
-      $http(request)
-        .then(function (response) {
-          $log.debug('HTTP request to Microsoft Graph API returned successfully.', response);     
-          response.status ===200 ? vm.requestSuccess = true : vm.requestSuccess = false; 
-          vm.requestFinished = true;
-          vm.responseData=response.data;
-        }, function (error) {
-          $log.error('HTTP request to Microsoft Graph API failed.');
-          vm.requestSuccess= false;
-          vm.requestFinished = true;
-        });
-    };
-     $rootScope.$on('node:clicked',function(e,data){
-       if(data.node.method){
-          vm.method=data.node.method;
-       }
-       if(data.node.method){
-          vm.url=data.node.url;
-       }
-       if(data.node.version){
-          vm.version=data.node.version;
-       }
-       if(data.node.data){
-          vm.payload=JSON.stringify(data.node.data);
-       }
-     });
+    
   };
 })();
 

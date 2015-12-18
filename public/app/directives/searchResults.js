@@ -5,41 +5,55 @@
                 restrict: 'E',
                 replace: true,
                 scope: {
-                    searchQuery:'=',
-                    searchBaseUrl:'=',
-                    template:'@'
+                    searchQuery:'@',            //sharepoint search query
+                    rowLimit:'@',               //row limit for the search query
+                    selectProperties:'@',       //selected Properties
+                    searchBaseUrl:'@',          //searh base url _api/search/query/querytext is added to it
+                    title:'@',             //title of the block
+                    template:'@',               //display template 
+                    propertyMap:'@'             //property map
                 }    
             };
             definition.link = function postLink(scope, element) {
-                //some initialization
-                scope.show = false;
-                scope.requestSuccess=false;
-                scope.requestFinished=false;
-                scope.responseData={};                
-                scope.template=scope.template||'templates/searchResults.html';
                 //start digest cycle if the search query changed
                 scope.$watch('searchQuery',function() {
                     compile();
 					loadData();
                 });
                 var compile = function() {
-                    $http.get(scope.template, { cache: $templateCache }).success(function(html) {
-                    element.html(html);
-                    $compile(element.contents())(scope);
-                    });
+                    scope.template=scope.template||'templates/searchResultsRollup.html';
+                    var request={
+                        method:'GET',
+                        url:scope.template,
+                        cache:$templateCache
+                    }
+                    $http(request).then(
+                        function(html){
+                                element.html(html);
+                                $compile(element.contents())(scope);
+                        },function(error){
+                            $log.error("error loading the templare")
+                        });
                 };
 				//the below function load search data
 				var loadData=function(){
-                    var request = {
+                    //some initialization
+                    scope.requestSuccess=false;
+                    scope.requestFinished=false;
+                    scope.responseData={};                
+                    scope.searchBaseUrl=scope.searchBaseUrl||'https://insightme.sharepoint.com';
+                    var request = 
+                    {
                         method: 'GET',
-                        url: scope.searchBaseUrl+'/_api/search/query?querytext=\''+scope.searchQuery+'\''
+                        url: scope.searchBaseUrl+constructSearchUrl()
                     };
+                    
                     $http(request)
-                        .then(function (response) {
-                        $log.debug('Search query executed successfully.', response);     
+                        .then(function (response) {                           
                         response.status ===200 ? scope.requestSuccess = true : scope.requestSuccess = false; 
                         scope.requestFinished = true;
-                        scope.responseData=response.data;
+                        scope.responseData=response.data.PrimaryQueryResult.RelevantResults.Table.Rows;
+                         $log.debug('Search query executed successfully.', scope.responseData); 
                         }, function (error) {
                         $log.error('Error executing search query:');
                         $log.error(error);
@@ -47,6 +61,17 @@
                         scope.requestFinished = true;
                         });
 				};
+                var constructSearchUrl=function(){
+                    var url='';
+                    url+='/_api/search/query?querytext=\''+scope.searchQuery+'\'';
+                    if(scope.rowLimit){
+                        url += '&rowlimit='+scope.rowLimit;
+                    }
+                    if(scope.selectProperties){
+                        url +='$selectProperties=\''+scope.selectProperties+'\'';
+                    }
+                    return url;
+                }
             };
             return definition;
         }])

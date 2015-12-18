@@ -1,7 +1,7 @@
 <div class="col-md-12">
   <div class="ms-Grid-row">
     <!-- App navigation bar markup. -->
-    <div class="ms-NavBar">
+    <div class="ms-NavBar" ng-show="main.isConnected">
       <ul class="ms-NavBar-items">
         <li class="navbar-header">You are now Connected</li>
         <li class="ms-NavBar-item ms-NavBar-item--right" ng-show="main.isConnected" ng-click="main.disconnect()"><i class="ms-Icon ms-Icon--x"></i> Disconnect</li>
@@ -22,11 +22,11 @@
       </div>
       <!--Only if connected-->
         <!-- start the console here-->
-        <div ng-show="main.isConnected"> 
+        <div ng-if="main.isConnected"> 
           <div>
             <h2 class="ms-font-xxl ms-fontWeight-semibold">Hi , {{ main.userAlias }}!</h2>
             <!--Search results directive-->
-            
+            <search-results  row-limit="3"  search-base-url="https://insightme.sharepoint.com" title="News Search" search-query="ContentType:NewsPage"/>
             <!--end of Search result directive-->
           </div>
         </div>
