@@ -3,13 +3,14 @@
 */
 
 (function () {
-  angular.module('MSGraphConsoleApp', [
+  angular.module('NewIntranetApp', [
     'ngRoute',
     'AdalAngular',
  	'angular-loading-bar',
 	'jsonFormatter'
   ])
-	.config(config);
+	.config(config)
+	.factory('searchResultsCommon',searchResultsCommon);
   
   // Configure the routes.
 	function config($routeProvider, $httpProvider, adalAuthenticationServiceProvider, cfpLoadingBarProvider) {
@@ -38,6 +39,26 @@
 			
 		// Remove spinner from loading bar.
     cfpLoadingBarProvider.includeSpinner = false;
+	};
+	//transform search result data
+	function searchResultsCommon()
+	{
+		var service={};
+		var items=[];
+		service.convertSearchResults=convertSearchResults;
+		function convertSearchResults(collection, mapping){
+			collection.foreach(function(collectionItem){
+				var item={};
+				collectionItem.cells.foreach(function(cell){
+					if(mapping.find(cell.key)){
+						item[cell.key]=cell.value;
+					}
+				});
+				items.push(item);
+			});
+			return items;
+		}
+		return service;
 	};
 	 
 })();

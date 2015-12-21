@@ -1,5 +1,5 @@
 (function () {
-    angular.module('MSGraphConsoleApp')
+    angular.module('NewIntranetApp')
         .directive('navItem',['$templateCache','$compile','$http','$log','$rootScope',function($templateCache,$compile,$http,$log,$rootScope){
             var definition = {
                 restrict: 'E',

@@ -4,7 +4,7 @@
 
 (function () {
   angular
-    .module('MSGraphConsoleApp')
+    .module('NewIntranetApp')
     .controller('MainController', MainController);
     
   /**

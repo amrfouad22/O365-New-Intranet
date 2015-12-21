@@ -1,6 +1,6 @@
 (function () {
-    angular.module('MSGraphConsoleApp')
-        .directive('searchResults',['$templateCache','$compile','$http','$log',function($templateCache,$compile,$http,$log){
+    angular.module('NewIntranetApp')
+        .directive('searchResults',['$templateCache','$compile','$http','$log','searchResultsCommon',function($templateCache,$compile,$http,$log,searchResultsCommon){
             var definition = {
                 restrict: 'E',
                 replace: true,
@@ -16,31 +16,23 @@
             };
             definition.link = function postLink(scope, element) {
                 //start digest cycle if the search query changed
+                scope.template=scope.template||'templates/searchResultsRollup.html';
                 scope.$watch('searchQuery',function() {
                     compile();
 					loadData();
                 });
                 var compile = function() {
-                    scope.template=scope.template||'templates/searchResultsRollup.html';
-                    var request={
-                        method:'GET',
-                        url:scope.template,
-                        cache:$templateCache
-                    }
-                    $http(request).then(
-                        function(html){
-                                element.html(html);
-                                $compile(element.contents())(scope);
-                        },function(error){
-                            $log.error("error loading the templare")
-                        });
+                    $http.get(scope.template, { cache: $templateCache }).success(function(html) {
+                    element.html(html);
+                    $compile(element.contents())(scope);
+                    });
                 };
 				//the below function load search data
 				var loadData=function(){
                     //some initialization
                     scope.requestSuccess=false;
                     scope.requestFinished=false;
-                    scope.responseData={};                
+                    scope.items={};                
                     scope.searchBaseUrl=scope.searchBaseUrl||'https://insightme.sharepoint.com';
                     var request = 
                     {
@@ -52,8 +44,7 @@
                         .then(function (response) {                           
                         response.status ===200 ? scope.requestSuccess = true : scope.requestSuccess = false; 
                         scope.requestFinished = true;
-                        scope.responseData=response.data.PrimaryQueryResult.RelevantResults.Table.Rows;
-                         $log.debug('Search query executed successfully.', scope.responseData); 
+                        scope.items=searchResultsCommon.transformResults(response.data.PrimaryQueryResult.RelevantResults.Table.Rows,{});
                         }, function (error) {
                         $log.error('Error executing search query:');
                         $log.error(error);
