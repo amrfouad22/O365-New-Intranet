@@ -24,7 +24,7 @@
                 var compile = function() {
                     $http.get(scope.template, { cache: $templateCache }).success(function(html) {
                     element.html(html);
-                    $compile(element.contents())(scope);
+                    $compile(element.contents())(scope);                   
                     });
                 };
 				//the below function load search data
@@ -42,14 +42,14 @@
                     
                     $http(request)
                         .then(function (response) {                           
-                        response.status ===200 ? scope.requestSuccess = true : scope.requestSuccess = false; 
-                        scope.requestFinished = true;
-                        scope.items=searchResultsCommon.transformResults(response.data.PrimaryQueryResult.RelevantResults.Table.Rows,JSON.parse(scope.propertyMap));
+                            response.status ===200 ? scope.requestSuccess = true : scope.requestSuccess = false; 
+                            scope.requestFinished = true;
+                            scope.items=searchResultsCommon.transformResults(response.data.PrimaryQueryResult.RelevantResults.Table.Rows,JSON.parse(scope.propertyMap));
                         }, function (error) {
-                        $log.error('Error executing search query:');
-                        $log.error(error);
-                        scope.requestSuccess= false;
-                        scope.requestFinished = true;
+                            $log.error('Error executing search query:');
+                            $log.error(error);
+                            scope.requestSuccess= false;
+                            scope.requestFinished = true;
                         });
 				};
                 var constructSearchUrl=function(){
@@ -65,5 +65,6 @@
                 }
             };
             return definition;
-        }])
+        }]);
+        
 })();

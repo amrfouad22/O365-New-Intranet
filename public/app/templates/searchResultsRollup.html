@@ -1,29 +1,9 @@
-<!--Slider template-->
-<!--- expects the following fields 
-item imge
-item title
-item subtitle
-item link
-!-->
-	
-<div class="slider-container">
-	<div class="slider" data-plugin-revolution-slider data-plugin-options='{"startheight": 677}'>
-		<ul ng-repeat="item in items">
-			<li data-transition="fade" data-slotamount="10" data-masterspeed="300" >
-				<img src="{{item.image}}" data-bgfit="cover" data-bgposition="right center" data-bgrepeat="no-repeat" alt="">
-					<div class="tp-caption top-label lfl stl"
-							data-x="center" data-hoffset="0"
-							data-y="500"
-							data-speed="300"
-							data-start="500"
-							data-easing="easeOutExpo"><a href={{item.link}}>{{item.title}}</a></div>
-					<div class="tp-caption main-label sft stb"
-							data-x="center" data-hoffset="0"
-							data-y="540"
-							data-speed="300"
-							data-start="1500"
-							data-easing="easeOutExpo">{{item.subtitle}}</div>
-				</li>
+	<div class="banner">
+		<ul>
+			<li data-transition="fade"  ng-repeat="item in items">
+				<img src="{{item.image}}" alt="" height="120">
+				<div><a href={{item.link}}>{{item.title}}</a></div>
+				<div>{{item.subtitle}}</div>
+			</li>
 		</ul>
 	</div>
-</div>

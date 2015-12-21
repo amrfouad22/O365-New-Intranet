@@ -2,7 +2,7 @@
   angular.module('NewIntranetApp')
   .factory('searchResultsCommon',searchResultsCommon);
   //transform search result data
-	function searchResultsCommon($log)
+	function searchResultsCommon()
 	{
 		var service={};
 		var items=[];
@@ -36,7 +36,7 @@
 			return "";
 		//image fieldss
 		if(value.indexOf("<img")>-1){
-			return getImageUrl(value);
+			return url= getImageUrl(value);
 		}
 		//if it doesn't need decoding...
 		return value;

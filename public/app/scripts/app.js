@@ -2,15 +2,14 @@
 * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 */
 
-(function () {
-  angular.module('NewIntranetApp', [
+	(function () {
+	angular.module('NewIntranetApp', [
     'ngRoute',
     'AdalAngular',
  	'angular-loading-bar',
 	'jsonFormatter'
   ])
-	.config(config)
-	.factory('searchResultsCommon',searchResultsCommon);
+	.config(config);
   
   // Configure the routes.
 	function config($routeProvider, $httpProvider, adalAuthenticationServiceProvider, cfpLoadingBarProvider) {
@@ -27,7 +26,7 @@
 		// Initialize the ADAL provider with your clientID (found in the Azure Management Portal) and the API URL (to enable CORS requests).
 		adalAuthenticationServiceProvider.init(
 			{
-				//tenant:tenantId,
+				tenant:tenantId,
 				clientId: clientId,
 				// The endpoints here are resources for cross origin requests.
 				endpoints: {
@@ -39,28 +38,7 @@
 			
 		// Remove spinner from loading bar.
     cfpLoadingBarProvider.includeSpinner = false;
-	};
-	//transform search result data
-	function searchResultsCommon()
-	{
-		var service={};
-		var items=[];
-		service.convertSearchResults=convertSearchResults;
-		function convertSearchResults(collection, mapping){
-			collection.foreach(function(collectionItem){
-				var item={};
-				collectionItem.cells.foreach(function(cell){
-					if(mapping.find(cell.key)){
-						item[cell.key]=cell.value;
-					}
-				});
-				items.push(item);
-			});
-			return items;
-		}
-		return service;
-	};
-	 
+	};	
 })();
 
 // *********************************************************
