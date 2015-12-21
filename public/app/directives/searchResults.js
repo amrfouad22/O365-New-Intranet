@@ -11,7 +11,7 @@
                     searchBaseUrl:'@',          //searh base url _api/search/query/querytext is added to it
                     title:'@',             //title of the block
                     template:'@',               //display template 
-                    propertyMap:'@'             //property map
+                    propertyMap:'@'             //property map string to be parsed on the form [{from:"",to:""},{from:"",to:""}]
                 }    
             };
             definition.link = function postLink(scope, element) {
@@ -44,7 +44,7 @@
                         .then(function (response) {                           
                         response.status ===200 ? scope.requestSuccess = true : scope.requestSuccess = false; 
                         scope.requestFinished = true;
-                        scope.items=searchResultsCommon.transformResults(response.data.PrimaryQueryResult.RelevantResults.Table.Rows,{});
+                        scope.items=searchResultsCommon.transformResults(response.data.PrimaryQueryResult.RelevantResults.Table.Rows,JSON.parse(scope.propertyMap));
                         }, function (error) {
                         $log.error('Error executing search query:');
                         $log.error(error);
@@ -59,7 +59,7 @@
                         url += '&rowlimit='+scope.rowLimit;
                     }
                     if(scope.selectProperties){
-                        url +='$selectProperties=\''+scope.selectProperties+'\'';
+                        url +='&selectProperties=\''+scope.selectProperties+'\'';
                     }
                     return url;
                 }
