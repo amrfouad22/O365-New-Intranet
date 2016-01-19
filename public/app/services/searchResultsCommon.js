@@ -54,8 +54,6 @@
         return ""; //replace this with the default image url later
 	}
 	function getImageData(url,$http,callback){
-		//test file on root site collection
-		//url="https://insightme.sharepoint.com/Shared%20Documents/AFouad_SharePoint_Consultant_Resume.pdf";
 		var weburl="https://insightme.sharepoint.com/sites/pub/news"
 		//get the image url and get the list folder
 		var url=url.replace(weburl,"");

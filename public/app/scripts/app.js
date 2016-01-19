@@ -30,7 +30,9 @@
 				clientId: clientId,
 				// The endpoints here are resources for cross origin requests.
 				endpoints: {
-					'https://insightme.sharepoint.com/sites/pub/news/_api/':'https://insightme.sharepoint.com'
+					'https://insightme.sharepoint.com/sites/pub/news':'https://insightme.sharepoint.com',
+					'https://insightme.sharepoint.com/_api/':'https://insightme.sharepoint.com',
+					
 					
 				}
 			},
