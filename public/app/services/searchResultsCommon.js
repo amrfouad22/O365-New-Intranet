@@ -2,7 +2,7 @@
   angular.module('NewIntranetApp')
   .factory('searchResultsCommon',searchResultsCommon);
   //transform search result data
-	function searchResultsCommon()
+	function searchResultsCommon($http)
 	{
 		var service={};
 		var items=[];
@@ -17,6 +17,9 @@
 					}
 				});
 				items.push(item);
+			});
+			getImageData(items[0].image,$http,function(d){
+				console.log(d);
 			});
 			return items;
 		}
@@ -49,5 +52,26 @@
             return searchBaseUrl+value.substring(0, value.indexOf("\"")) 
         }
         return ""; //replace this with the default image url later
+	}
+	function getImageData(url,$http,callback){
+		//test file on root site collection
+		//url="https://insightme.sharepoint.com/Shared%20Documents/AFouad_SharePoint_Consultant_Resume.pdf";
+		var weburl="https://insightme.sharepoint.com/sites/pub/news"
+		//get the image url and get the list folder
+		var url=url.replace(weburl,"");
+		var index=url.lastIndexOf("/");
+		var folder=url.substring(1,index);
+		var file=url.substring(index+1);
+	 	var fileUrl=weburl+"/_api/web/GetFolderByServerRelativeUrl('"+folder+"')/Files('"+file+"')/$value";
+		var request = 
+		{
+			method: 'GET',
+			url: fileUrl
+		};
+		$http(request).then(function(response){
+			callback(response.data);
+		},function(error){
+			console.log(error);
+		})
 	}
 }());
