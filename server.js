@@ -6,7 +6,8 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var path = require('path'); 
-
+var images=require('./imageHandler');
+var bodyParser = require('body-parser');
 // Initialize variables. 
 var port = process.env.PORT || 9090; 
 
@@ -16,22 +17,18 @@ app.use(morgan('dev'));
 // Set the front-end folder to serve public assets.
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public/app'));
-app.use(express.static(__dirname + '/bower_components/json-formatter/dist'));
+//use body parser
+app.use(bodyParser.json());
 
+app.use(express.static(__dirname + '/bower_components/json-formatter/dist'));
+//live reload
+app.use(require('connect-livereload')());
+//set up route for image cache
+app.use('*/images/*',images);
 // Set up our one route to the index.html file.
 app.get('*', function (req, res) {
 	res.sendFile(path.join(__dirname + '/public/index.html'));
 });
-
-//CORS middleware
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
-
-
 // Start the server.  
 app.listen(port);
 console.log('Listening on port ' + port + '...'); 

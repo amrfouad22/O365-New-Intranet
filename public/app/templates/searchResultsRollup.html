@@ -1,7 +1,7 @@
 	<div class="banner">
 		<ul>
 			<li data-transition="fade"  ng-repeat="item in items">
-				<img src="{{item.image}}" alt="" height="120">
+				<sp-image url="item.image"></sp-image>
 				<div><a href={{item.link}}>{{item.title}}</a></div>
 				<div>{{item.subtitle}}</div>
 			</li>
