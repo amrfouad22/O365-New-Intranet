@@ -19,8 +19,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public/app'));
 //use body parser
 app.use(bodyParser.json());
-
-app.use(express.static(__dirname + '/bower_components/json-formatter/dist'));
 //live reload
 app.use(require('connect-livereload')());
 //set up route for image cache

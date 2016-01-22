@@ -6,8 +6,7 @@
 	angular.module('NewIntranetApp', [
     'ngRoute',
     'AdalAngular',
- 	'angular-loading-bar',
-	'jsonFormatter'
+ 	'angular-loading-bar'
   ])
 	.config(config);
   
@@ -32,6 +31,7 @@
 				endpoints: {
 					'https://insightme.sharepoint.com/sites/pub/news':'https://insightme.sharepoint.com',
 					'https://insightme.sharepoint.com/_api/':'https://insightme.sharepoint.com',
+                    'https://insightme.sharepoint.com/sites/pub/news/PublishingImages/':'https://insightme.sharepoint.com'
 				}
 			},
 			$httpProvider

@@ -9,9 +9,11 @@
                     rowLimit:'@',               //row limit for the search query
                     selectProperties:'@',       //selected Properties
                     searchBaseUrl:'@',          //searh base url _api/search/query/querytext is added to it
-                    title:'@',             //title of the block
+                    title:'@',                  //title of the block
                     template:'@',               //display template 
-                    propertyMap:'@'             //property map string to be parsed on the form [{from:"",to:""},{from:"",to:""}]
+                    propertyMap:'@',            //property map string to be parsed on the form [{from:"",to:""},{from:"",to:""}]
+                    webUrl:'@',                 //web URL
+                    resourceUrl:'@'
                 }    
             };
             definition.link = function postLink(scope, element) {
@@ -34,6 +36,8 @@
                     scope.requestFinished=false;
                     scope.items={};                
                     scope.searchBaseUrl=scope.searchBaseUrl||'https://insightme.sharepoint.com';
+                    scope.resourceUrl=scope.resourceUrl||'https://insightme.sharepoint.com';
+                    scope.webUrl=scope.webUrl||'https://insightme.sharepoint.com';
                     var request = 
                     {
                         method: 'GET',
