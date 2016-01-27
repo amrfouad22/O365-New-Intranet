@@ -1,18 +1,21 @@
 var express = require('express');
 var request=require('request');
-var base64=require('base64-js');
 var redis=require('redis');
+var fs = require('fs');
+var uuid = require('node-uuid');
 var router = express.Router();
 
 router.post('/', function(req, res) {
     //read the request url and try to get it from redis cache, if not try Office365 and put it in mongodb for further usage.
     var url=req.body.image;
+    var fileName=url.substring(url.lastIndexOf('/')+1);
+    var cachedImagesFolder='/public/CachedImages/';
     //create redis client
     var client = redis.createClient();
     client.on('connect',function(){  
         //try to get the value from redis  
         client.get(req.body.image,function(err,reply){
-            if(err){
+            if(err){ //redis cache is not available 
                 res.sendStatus(500);
                 return;
             }
@@ -33,15 +36,21 @@ router.post('/', function(req, res) {
                     url: fileUrl,
                     headers: {
                         'authorization': req.body.token
-                    }
+                    },
+                    encoding:'binary'
                 };
                 //get file data from SharePoint online
                 request.get(options,function(error,response,body){
+               
                     if (!error && response.statusCode == 200) {
-                        var result=base64.fromByteArray(response.body);
+
+                        //save file to the cachedImages folder sync
+                        //full file name
+                        var uniqueFileName=uuid.v4()+'_'+fileName;
+                        fs.writeFileSync(__dirname+cachedImagesFolder+uniqueFileName,response.body,'binary');
                         //save the result to redis cache
-                        client.set(req.body.image,result);
-                        res.send(result);
+                        client.set(req.body.image,uniqueFileName);
+                        res.send(uniqueFileName);
                     } 
                     else{
                         console.log("can't get SPO file..")
@@ -63,5 +72,4 @@ router.get('/',function(req,res){
   //forbbiden
   res.sendStatus(403);
 })
-
 module.exports = router;

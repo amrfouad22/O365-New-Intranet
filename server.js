@@ -17,8 +17,10 @@ app.use(morgan('dev'));
 // Set the front-end folder to serve public assets.
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/public/app'));
+app.use(express.static(__dirname + '/public/CachedImages'));
 //use body parser
 app.use(bodyParser.json());
+app.use(bodyParser.raw());
 //live reload
 app.use(require('connect-livereload')());
 //set up route for image cache

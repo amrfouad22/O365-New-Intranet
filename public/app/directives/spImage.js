@@ -10,7 +10,7 @@
                     resourceUrl:'='                    
                 }    
             };
-            definition.template='<img src="data:image/png;base64,{{data}}"/>';
+            definition.template='<img src="{{data}}"/>';
             definition.link = function postLink(scope, element) {
                 var cache=true;
                 if(!cache){
