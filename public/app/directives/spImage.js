@@ -7,10 +7,11 @@
                 scope: {
                     url:'=',
                     webUrl:'=',
-                    resourceUrl:'='                    
+                    resourceUrl:'=',
+                    width:'@'                    
                 }    
             };
-            definition.template='<img src="{{data}}"/>';
+            definition.template='<img src="{{data}}" width="{{width}}"/>';
             definition.link = function postLink(scope, element) {
                 var cache=true;
                 if(!cache){
