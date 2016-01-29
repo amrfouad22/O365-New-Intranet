@@ -7,3 +7,4 @@ tmp
 .vscode
 *.db
 /public/cachedimages/*
+typings/*
