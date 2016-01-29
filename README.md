@@ -29,6 +29,7 @@ used to define the delegated permission of our Nodejs App , authentication is do
 4. Redis Cache to store key,value for the retrieved Images
 5. SharePoint online (content store)
  it's simply where your content exists.
+
 ## How to run the sample 
 Simply clone and run 
 ```
