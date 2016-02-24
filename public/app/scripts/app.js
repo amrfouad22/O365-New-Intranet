@@ -31,7 +31,8 @@
 				endpoints: {
 					'https://insightme.sharepoint.com/sites/pub/news':'https://insightme.sharepoint.com',
 					'https://insightme.sharepoint.com/_api/':'https://insightme.sharepoint.com',
-                    'https://insightme.sharepoint.com/sites/pub/news/PublishingImages/':'https://insightme.sharepoint.com'
+                    'https://insightme.sharepoint.com/sites/pub/news/PublishingImages/':'https://insightme.sharepoint.com',
+                    'https://graph.microsoft.com': 'https://graph.microsoft.com'
 				}
 			},
 			$httpProvider

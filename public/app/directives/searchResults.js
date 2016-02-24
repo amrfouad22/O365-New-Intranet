@@ -1,6 +1,6 @@
 (function () {
     angular.module('NewIntranetApp')
-        .directive('searchResults',['$templateCache','$compile','$http','$log','searchResultsCommon',function($templateCache,$compile,$http,$log,searchResultsCommon){
+        .directive('searchResults',['$templateCache','$compile','$http','$log','$timeout','searchResultsCommon',function($templateCache,$compile,$http,$log,$timeout,searchResultsCommon){
             var definition = {
                 restrict: 'E',
                 replace: true,
@@ -22,6 +22,17 @@
                 scope.$watch('searchQuery',function() {
                     compile();
 					loadData();
+                    $timeout(function(){
+                     $('[data-plugin-carousel]:not(.manual), .owl-carousel:not(.manual)').each(function() {
+                            $log.debug($this);
+                            var $this = $(this),
+                                opts;
+                            var pluginOptions = $this.data('plugin-options');
+                            if (pluginOptions)
+                                opts = pluginOptions;
+                            $this.themePluginCarousel(opts);
+                        });
+                    },2000);
                 });
                 var compile = function() {
                     $http.get(scope.template, { cache: $templateCache }).success(function(html) {
@@ -29,6 +40,7 @@
                     $compile(element.contents())(scope);                   
                     });
                 };
+                
 				//the below function load search data
 				var loadData=function(){
                     //some initialization
@@ -66,6 +78,10 @@
                         url +='&selectProperties=\''+scope.selectProperties+'\'';
                     }
                     return url;
+                }
+                scope.getDateArr=function(date){
+                    var d=new Date(date);
+                    return d.toDateString().split(" ");
                 }
             };
             return definition;

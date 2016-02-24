@@ -25,11 +25,16 @@
         <div ng-if="main.isConnected"> 
           <div>
             <h2 class="ms-font-xxl ms-fontWeight-semibold">Hi , {{ main.userAlias }}!</h2>
-            <search-results row-limit="3"  search-base-url="https://insightme.sharepoint.com" 
-                            title="News Search" search-query="ContentType:NewsPage"
-                            property-map='[{"from":"PATH","to":"link"},{"from":"PublishingImage","to":"image"},{"from":"Title","to":"title"},{"from":"Comments","to":"subtitle"}]'
-                            select-properties='Title,PATH,Comments,PublishingImage'
-                            web-url='https://insightme.sharepoint.com/sites/pub/news'/>
+            <div class="col-md-9">
+                <search-results row-limit="3"  search-base-url="https://insightme.sharepoint.com" 
+                    title="News Search" search-query="ContentType:NewsPage Path:https://insightme.sharepoint.com/sites/pub*"
+                    property-map='[{"from":"PATH","to":"link"},{"from":"PublishingImage","to":"image"},{"from":"Title","to":"title"},{"from":"Comments","to":"subtitle"},{"from":"ArticleStartDateOWSDATE","to":"date"}]'
+                    select-properties='Title,PATH,Comments,PublishingImage,ArticleStartDateOWSDATE'
+                    web-url='https://insightme.sharepoint.com/sites/pub/news'/>
+            </div>
+            <div class="col-md-3">
+                <file-explorer dir="/me/drive/root/children" template="/templates/explorer.html"/>
+            </div>
           </div>
         </div>
     </div>

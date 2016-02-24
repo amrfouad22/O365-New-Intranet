@@ -1,0 +1,23 @@
+<h3 class="heading-tertiary">My Files</h3>
+<h4 class="heading-tertiary">{{dir.replace("/me/drive/root/","").split("children").join("")}}</h4>
+<div>
+	<div> 
+		<span ng-if="loading"><img src="/images/spinner.gif"/></span>
+	</div>
+	<div ng-if="!loading">
+		<div ng-if="dir!='/me/drive/root/children'"><a ng-click="levelUp()" style="cursor:pointer">Up ..</a></div>
+		<span ng-if="items.length==0&&!loading">this folder is empty</span>
+		<ul class="jqueryFileTree"  ng-repeat="item in items" id="list">
+			<!--if file render as a file-->
+			<li ng-if="!item.folder" class="{{'file ext_'+item.path.split('.').slice(-1).toString()}}">
+				<a style="cursor:pointer" rel="{{item.webUrl}}" title="file size {{item.size}}" ng-href="{{item.webUrl}}" target="_blank">{{item.name}}({{item.size}})</a>
+			</li>
+			<!--end of file render-->
+			<!--if folder-->
+			<!--simply change the directive scope dir to the current path-->
+			<li ng-if="item.folder" class="directory collapsed">
+				<a style="cursor:pointer" ng-Dblclick="linkClick(item.name)" >{{item.name}}</a>
+			</li>	
+		</ul>
+	</div>
+</div>

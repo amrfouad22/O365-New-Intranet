@@ -8,10 +8,11 @@
                     url:'=',
                     webUrl:'=',
                     resourceUrl:'=',
-                    width:'@'                    
+                    cssClass:'@',
+                    width:'@'
                 }    
             };
-            definition.template='<img src="{{data}}" width="{{width}}"/>';
+            definition.template='<img src="{{data}}"  class="{{cssClass}}" widht="{{width}}"/>';
             definition.link = function postLink(scope, element) {
                 var cache=true;
                 if(!cache){

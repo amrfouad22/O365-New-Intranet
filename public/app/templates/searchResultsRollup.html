@@ -1,10 +1,16 @@
-	<div class="banner">
-		<ul>
-			<li data-transition="fade"  ng-repeat="item in items">
-                <!--img src="{{item.image}}"/-->
-				<sp-image url="item.image" web-url="webUrl" resource-url="resourceUrl" width="200"></sp-image>
-				<div><a href={{item.link}}>{{item.title}}</a></div>
-				<div>{{item.subtitle}}</div>
-			</li>
-		</ul>
-	</div>
+<h3 class="heading-tertiary">Latest News</h3>
+<div class="owl-carousel show-nav-title top-border" data-plugin-options='{"responsive": {"0": {"items": 1}, "479": {"items": 1}, "768": {"items": 2}, "979": {"items": 3}, "1199": {"items": 3}}, "items": 3, "margin": 10, "loop": false, "nav": true, "dots": false}'>
+    <div class="recent-posts" ng-repeat="item in items">
+        <article class="post">
+            <div>
+                <sp-image url="item.image" web-url="webUrl" resource-url="resourceUrl" css-class="img-responsive img-rounded" width="200"></sp-image>
+            </div>
+            <div class="date">
+                <span class="day">{{getDateArr(item.date)[2]}}</span>
+                <span class="month">{{getDateArr(item.date)[1]}}</span>
+            </div>
+            <h4><a href="{{item.link}}">{{item.title}}</a></h4>
+            <p> {{item.subtitle}}<a href="{{item.link}}" class="read-more">read more <i class="fa fa-angle-right"></i></a></p>
+        </article>
+    </div>
+</div>
