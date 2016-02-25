@@ -1,0 +1,9 @@
+<h3 class="heading-tertiary">My Messages</h3>
+<div> 
+    <span ng-if="loading"><img src="/images/spinner.gif"/></span>
+</div>
+<div ng-if="!loading">
+    <ul class="list list-icons" ng-repeat="item in items">
+        <li><i class="fa fa-envelope"></i><a ng-href="{{item.webLink}}" target="_blank">{{item.subject}}</a></li>
+    </ul>
+</div>
