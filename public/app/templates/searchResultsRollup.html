@@ -3,7 +3,8 @@
     <div class="recent-posts" ng-repeat="item in items">
         <article class="post">
             <div>
-                <sp-image url="item.image" web-url="webUrl" resource-url="resourceUrl" css-class="img-responsive img-rounded" width="200"></sp-image>
+                <img src="{{item.image}}" css-class="img-responsive img-rounded" width="200"/>
+                <!--sp-image url="item.image" web-url="webUrl" resource-url="resourceUrl" css-class="img-responsive img-rounded" width="200"></sp-image-->
             </div>
             <div class="date">
                 <span class="day">{{getDateArr(item.date)[2]}}</span>

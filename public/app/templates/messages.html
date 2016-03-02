@@ -4,6 +4,6 @@
 </div>
 <div ng-if="!loading">
     <ul class="list list-icons" ng-repeat="item in items">
-        <li><i class="fa fa-envelope"></i><a ng-href="{{item.webLink}}" target="_blank">{{item.subject}}</a></li>
+        <li><i class="fa fa-envelope"></i><a ng-href="{{item.webLink}}" target="_blank">{{item.subject}}</a>{{item.sentDateTime}}</li>
     </ul>
 </div>
